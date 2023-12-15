@@ -59,5 +59,5 @@ cd /opt/zeek/bin/
 
 14. command linking
 ```bash 
-echo "$PATH:/opt/zeek/bin" > ~/.bashrc 
+echo 'export PATH=$PATH:/opt/zeek/bin' > ~/.bashrc 
 ``` 
