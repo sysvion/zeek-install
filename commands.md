@@ -1,4 +1,4 @@
-## Installing Zeek
+## Installing Zeek on a raspberry pi
 
 ### Commands
 
@@ -7,7 +7,7 @@
 ```bash
 sudo apt update
 sudo apt full-upgrade -y
-sudo apt install -y --no-install-recommends g++ cmake make libpcap-dev
+sudo apt install -y --no-install-recommends g++ cmake make libpcap-dev curl
 ```
 
 2. Adding the opensuse repositories and installing zeek:
@@ -64,6 +64,10 @@ zeek         standalone localhost     running   4525   15 Dec 14:12:06
 9. Create the zeek service file:
 
 And put the contents of the following codeblock in `/etc/systemd/system/zeek.service`
+
+> [!note]
+> you need root permissions to write the file
+>
 
 ```service
 [Unit]
@@ -148,6 +152,7 @@ pi:pipipipi
 ```bash
 sudo vi /opt/splunkforwarder/etc/system/local/inputs.conf
 ```
+
 Contents
 ```conf
 [default]
