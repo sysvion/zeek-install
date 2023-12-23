@@ -2,7 +2,7 @@
 
 ### Commands
 
-Updating the system and installing prerequisites:
+1. Updating the system and installing prerequisites:
 
 ```bash
 sudo apt update
@@ -10,7 +10,7 @@ sudo apt full-upgrade -y
 sudo apt install -y --no-install-recommends g++ cmake make libpcap-dev
 ```
 
-Adding the opensuse repositories and installing zeek:
+2. Adding the opensuse repositories and installing zeek:
 
 ```bash
 echo 'deb http://download.opensuse.org/repositories/security:/zeek/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
@@ -19,38 +19,38 @@ sudo apt update
 sudo apt install zeek
 ```
 
-Adding zeek to PATH:
+3. Adding zeek to PATH:
 
 ```bash
 echo "PATH=$PATH:/opt/zeek/bin" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-Set-up zeek node:
+4. Set-up zeek node:
 
 ```bash
 sudo sed 's/interface=eth0/interface=wlan0/' -i /opt/zeek/etc/node.cfg
 ```
 
-Enable JSON output:
+5. Enable JSON output:
 
 ```bash
 echo '@load policy/tuning/json-logs.zeek' | sudo tee -a /opt/zeek/share/zeek/site/local.zeek
 ```
 
-Install zeek:
+6. Install zeek:
 
 ```bash
 sudo /opt/zeek/bin/zeekctl install
 ```
 
-Start zeek:
+7. Start zeek:
 
 ```bash
 sudo /opt/zeek/bin/zeekctl start
 ```
 
-Check the status:
+8. Check the status:
 
 ```bash
 sudo /opt/zeek/bin/zeekctl status
@@ -61,7 +61,8 @@ Name         Type       Host          Status    Pid    Started
 zeek         standalone localhost     running   4525   15 Dec 14:12:06
 ```
 
-Create the zeek service file:
+9. Create the zeek service file:
+
 And put the contents of the following codeblock in /etc/systemd/system/zeek.service
 
 ```service
@@ -88,16 +89,17 @@ WantedBy=multi-user.target
 Alias=zeek.service
 ```
 
-Enable and start the service:
+10. Enable and start the service:
 
 ```bash
 sudo systemctl start zeek
 sudo systemctl enable zeek
 ```
 out:
+```
 Created symlink /etc/systemd/system/multi-user.target.wants/zeek.service → /etc/systemd/system/zeek.service.
-
-Add the zeek cleanup config:
+```
+11. Add the zeek cleanup config:
 
 ```bash
 crontab -e
@@ -112,24 +114,24 @@ And add
 
 ### Commands
 
-Add a dedicated user for splunk forwarder and escalate to this user:
+1. Add a dedicated user for splunk forwarder and escalate to this user:
 
----note
-Sudo?
----
+> [!note]
+> the system may deny the following command. So you may need to prepend `sudo` before the command.
+> 
 
 ```bash
 adduser splunk -q --disabled-password
 ```
 
-Download and install splunk forwarder:
+2. Download and install splunk forwarder:
 
 ```bash
 wget -O splunkforwarder-9.1.2-b6b9c8185839-Linux-armv8.deb "https://download.splunk.com/products/universalforwarder/releases/9.1.2/linux/splunkforwarder-9.1.2-b6b9c8185839-Linux-armv8.deb"
 sudo dpkg -i splunkforwarder-9.1.2-b6b9c8185839-Linux-armv8.deb
 ```
 
-Add forward server:
+3. Add forward server:
 
 ```bash
 sudo /opt/splunkforwarder/bin/splunk add forward-server 172.233.32.125:9997
@@ -141,7 +143,7 @@ Admin credentials:
 pi:pipipipi
 ```
 
-Edit the splunk forwarder inputs:
+4. Edit the splunk forwarder inputs:
 
 ```bash
 sudo vi /opt/splunkforwarder/etc/system/local/inputs.conf
@@ -242,12 +244,12 @@ source = bro.files.log
 sourcetype = bro:json
 ```
 
-Start and enable splunk forwarder to start at boot:
+5. Start and enable splunk forwarder to start at boot:
 
 ```bash
 sudo /opt/splunkforwarder/bin/splunk enable boot-start
 sudo /opt/splunkforwarder/bin/splunk start
 ```
 
-Install the TA for Zeek:
+### Install the TA for Zeek:
 https://splunkbase.splunk.com/app/5466
