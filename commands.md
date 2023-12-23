@@ -63,7 +63,7 @@ zeek         standalone localhost     running   4525   15 Dec 14:12:06
 
 9. Create the zeek service file:
 
-And put the contents of the following codeblock in /etc/systemd/system/zeek.service
+And put the contents of the following codeblock in `/etc/systemd/system/zeek.service`
 
 ```service
 [Unit]
@@ -117,7 +117,7 @@ And add
 1. Add a dedicated user for splunk forwarder and escalate to this user:
 
 > [!note]
-> the system may deny the following command. So you may need to prepend `sudo` before the command.
+> your system may deny the following command. to fix it you can add `sudo` before the command.
 > 
 
 ```bash
@@ -149,7 +149,7 @@ pi:pipipipi
 sudo vi /opt/splunkforwarder/etc/system/local/inputs.conf
 ```
 Contents
-```
+```conf
 [default]
 host = zeek-01
 
